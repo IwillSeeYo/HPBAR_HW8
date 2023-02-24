@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private const float _maxHealth = 100;
+    private const float _minHealth = 0;
 
     private float _currentHealthPoint;
 
@@ -20,19 +21,13 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damade)
     {
-        _currentHealthPoint -= damade;
+        _currentHealthPoint = Mathf.Clamp(_currentHealthPoint - damade, _minHealth, _maxHealth);
         HealthChange?.Invoke(CurrentHealthPoint);
-
-        if (_currentHealthPoint < 0)
-            _currentHealthPoint = 0;
     }
 
     public void TakeHeal(float heal)
     {
-        _currentHealthPoint += heal;
+        _currentHealthPoint = Mathf.Clamp(_currentHealthPoint + heal, _minHealth, _maxHealth);
         HealthChange?.Invoke(CurrentHealthPoint);
-
-        if (_currentHealthPoint > _maxHealth)
-            _currentHealthPoint = _maxHealth;
     }
 }
