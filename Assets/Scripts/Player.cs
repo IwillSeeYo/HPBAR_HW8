@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private float _maxHealth = 100;
+    private const float _maxHealth = 100;
+
     private float _currentHealthPoint;
-    private float _value = 10f;
+
+    public event Action<float> HealthChange;
 
     public float MaxHealth => _maxHealth;
     public float CurrentHealthPoint => _currentHealthPoint;
@@ -15,23 +17,24 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _currentHealthPoint = _maxHealth;
+        HealthChange?.Invoke(CurrentHealthPoint);
     }
 
-    private void Update()
+    public void TakeDamage(float damade)
     {
-        if (_currentHealthPoint > _maxHealth)
-            _currentHealthPoint = _maxHealth;
-        else if (_currentHealthPoint < 0)
+        _currentHealthPoint -= damade;
+        HealthChange?.Invoke(CurrentHealthPoint);
+
+        if (_currentHealthPoint < 0)
             _currentHealthPoint = 0;
     }
 
-    public void TakeDamage()
+    public void TakeHeal(float heal)
     {
-        _currentHealthPoint -= _value;
-    }
+        _currentHealthPoint += heal;
+        HealthChange?.Invoke(CurrentHealthPoint);
 
-    public void TakeHeal()
-    {
-        _currentHealthPoint += _value;
+        if (_currentHealthPoint > _maxHealth)
+            _currentHealthPoint = _maxHealth;
     }
 }
