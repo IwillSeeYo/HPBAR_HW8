@@ -24,11 +24,6 @@ public class HitpointBar : MonoBehaviour
     private void OnDisable()
     {
         _player.HealthChange-= OnChangeHealth;
-
-        if(_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-        }
     }
 
     private void OnChangeHealth(float health)
