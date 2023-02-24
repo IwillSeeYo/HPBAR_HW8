@@ -19,11 +19,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(_currentHealthPoint > _maxHealth)
+        if (_currentHealthPoint > _maxHealth)
             _currentHealthPoint = _maxHealth;
-        else if(_currentHealthPoint <0)
+        else if (_currentHealthPoint < 0)
             _currentHealthPoint = 0;
-
     }
 
     public void TakeDamage()
